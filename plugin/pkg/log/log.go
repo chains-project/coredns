@@ -14,6 +14,8 @@ import (
 	golog "log"
 	"os"
 	"sync/atomic"
+
+	"tideland.dev/go/stew/callstack"
 )
 
 // D controls whether we should output debug logs. If true, we do, once set
@@ -44,8 +46,16 @@ func logf(level, format string, v ...interface{}) {
 	golog.Print(level, fmt.Sprintf(format, v...))
 }
 
+func GetStack() {
+	fmt.Printf("Caller package: %s", callstack.Here().Package())
+}
+
+func GetPid() int64
+
 // log calls log.Print prefixed with level.
 func log(level string, v ...interface{}) {
+	GetPid()
+	fmt.Printf("Handling of a request\n")
 	golog.Print(level, fmt.Sprint(v...))
 }
 
